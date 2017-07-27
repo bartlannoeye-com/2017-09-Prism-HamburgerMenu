@@ -1,8 +1,10 @@
-﻿<Application
+﻿<windows:PrismAutofacApplication
     x:Class="HamburgerMenuSample.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:HamburgerMenuSample"
+    xmlns:windows="using:Prism.Autofac.Windows"
     RequestedTheme="Light">
 
-</Application>
+</windows:PrismAutofacApplication>
+
