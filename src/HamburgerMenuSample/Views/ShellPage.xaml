@@ -6,11 +6,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:HamburgerMenuSample.ViewModels"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
-
-    <Page.DataContext>
-        <viewModels:ShellViewModel />
-    </Page.DataContext>
 
     <Page.Resources>
         <DataTemplate x:Key="HamburgerMenuItem" x:DataType="controls:HamburgerMenuGlyphItem">
@@ -45,6 +43,20 @@
                             HamburgerHeight="48"
                             IsPaneOpen="False">
         <Frame x:Name="FrameToReplace"></Frame>
+
+        <interactivity:Interaction.Behaviors>
+            <core:EventTriggerBehavior EventName="ItemClick">
+                <core:EventTriggerBehavior.Actions>
+                    <!--<core:InvokeCommandAction Command="{Binding MenuItemClicked}" CommandParameter="{Binding ElementName=HamburgerMenuControl, Path=SelectedItem}"/>-->
+                    <core:InvokeCommandAction Command="{Binding MenuItemClicked}" />
+                </core:EventTriggerBehavior.Actions>
+            </core:EventTriggerBehavior>
+            <core:EventTriggerBehavior EventName="OptionsItemClick">
+                <core:EventTriggerBehavior.Actions>
+                    <core:InvokeCommandAction Command="{Binding OptionItemClicked}" />
+                </core:EventTriggerBehavior.Actions>
+            </core:EventTriggerBehavior>
+        </interactivity:Interaction.Behaviors>
     </controls:HamburgerMenu>
 </Page>
 

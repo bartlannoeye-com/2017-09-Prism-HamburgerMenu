@@ -1,13 +1,24 @@
 ﻿using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Controls;
+using HamburgerMenuSample.Constants;
+using HamburgerMenuSample.Control;
 using Microsoft.Toolkit.Uwp.UI.Controls;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Windows.Navigation;
 
 namespace HamburgerMenuSample.ViewModels
 {
     internal class ShellViewModel : BindableBase
     {
-        public ShellViewModel()
+        private readonly INavigationService _navigationService;
+
+        public ShellViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
+            MenuItemClicked = new DelegateCommand<ItemClickEventArgs>(OnMenuItemClicked);
+            OptionItemClicked = new DelegateCommand<ItemClickEventArgs>(OnMenuItemClicked);
+
             LoadNavigationItems();
         }
 
@@ -25,11 +36,21 @@ namespace HamburgerMenuSample.ViewModels
             set => SetProperty(ref _optionItems, value);
         }
 
+        public DelegateCommand<ItemClickEventArgs> MenuItemClicked { get; }
+
+        public DelegateCommand<ItemClickEventArgs> OptionItemClicked { get; }
+
+        private void OnMenuItemClicked(ItemClickEventArgs args)
+        {
+            HamburgerMenuPrismItem menuItem = (HamburgerMenuPrismItem)args.ClickedItem;
+            _navigationService.Navigate(menuItem.TargetPageToken, null);
+        }
+
         private void LoadNavigationItems()
         {
             MenuItems = new ObservableCollection<HamburgerMenuItem>();
-            MenuItems.Add(new HamburgerMenuGlyphItem { Label = "Account" });
-            MenuItems.Add(new HamburgerMenuGlyphItem { Label = "Order" });
+            MenuItems.Add(new HamburgerMenuPrismItem {Label = "Main", TargetPageToken = PageTokens.MainPage});
+            MenuItems.Add(new HamburgerMenuPrismItem {Label = "Second", TargetPageToken = PageTokens.SecondPage});
             MenuItems.Add(new HamburgerMenuGlyphItem { Label = "Order Detail" });
             MenuItems.Add(new HamburgerMenuGlyphItem { Label = "Payment" });
 

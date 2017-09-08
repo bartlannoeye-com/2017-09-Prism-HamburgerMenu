@@ -2,6 +2,7 @@
 {
     public class PageTokens
     {
-        public const string Main = "Main";
+        public const string MainPage = "Main";
+        public const string SecondPage = "Second";
     }
 }
